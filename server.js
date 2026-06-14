@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const ytdl = require('@distube/ytdl-core');
-const youtubedl = require('youtube-dl-exec');
+const { spawn } = require('child_process');
 
 const app = express();
 app.use(cors());
@@ -43,16 +43,17 @@ app.get('/api/youtube-download', async (req, res) => {
         
         const formatOption = isMp3 ? 'bestaudio' : 'best';
         
-        const subprocess = youtubedl.exec(url, {
-            output: '-', // Pipe output to stdout
-            format: formatOption,
-            noCheckCertificates: true,
-            noWarnings: true,
-            addHeader: [
-                'referer:youtube.com',
-                'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            ]
-        });
+        const args = [
+            url,
+            '-o', '-',
+            '-f', formatOption,
+            '--no-check-certificates',
+            '--no-warnings',
+            '--add-header', 'referer:youtube.com',
+            '--add-header', 'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        ];
+
+        const subprocess = spawn('./yt-dlp', args);
 
         subprocess.stdout.pipe(res);
 
