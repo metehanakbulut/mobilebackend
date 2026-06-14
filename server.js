@@ -2,6 +2,37 @@ const express = require('express');
 const cors = require('cors');
 const ytdl = require('@distube/ytdl-core');
 const { spawn } = require('child_process');
+const fs = require('fs');
+const https = require('https');
+
+const YTDLP_PATH = './yt-dlp';
+
+// Startup Check: Download yt-dlp if it doesn't exist
+if (!fs.existsSync(YTDLP_PATH)) {
+    console.log("yt-dlp binary not found, downloading from GitHub...");
+    const file = fs.createWriteStream(YTDLP_PATH);
+    https.get("https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp", (response) => {
+        if (response.statusCode === 302 || response.statusCode === 301) {
+            https.get(response.headers.location, (res2) => {
+                res2.pipe(file);
+                file.on("finish", () => {
+                    file.close();
+                    fs.chmodSync(YTDLP_PATH, '755');
+                    console.log("yt-dlp downloaded successfully!");
+                });
+            });
+        } else {
+            response.pipe(file);
+            file.on("finish", () => {
+                file.close();
+                fs.chmodSync(YTDLP_PATH, '755');
+                console.log("yt-dlp downloaded successfully!");
+            });
+        }
+    }).on('error', (err) => {
+        console.error("Failed to download yt-dlp:", err.message);
+    });
+}
 
 const app = express();
 app.use(cors());
