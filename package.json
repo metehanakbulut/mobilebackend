@@ -1,0 +1,46 @@
+{
+  "name": "belgedonusturme-backend",
+  "version": "1.0.0",
+  "description": "Secure Document Converter API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
+    "@napi-rs/canvas": "^1.0.0",
+    "@pdfsmaller/pdf-decrypt": "^1.0.1",
+    "@pdfsmaller/pdf-encrypt-lite": "^1.0.2",
+    "adm-zip": "^0.5.17",
+    "axios": "^1.17.0",
+    "canvas": "^3.2.3",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.5",
+    "docx": "^9.6.1",
+    "dotenv": "^16.4.5",
+    "duck-duck-scrape": "^2.2.7",
+    "express": "^4.19.2",
+    "ffmpeg-static": "^5.3.0",
+    "googlethis": "^1.8.0",
+    "mammoth": "^1.7.1",
+    "msnodesqlv8": "^4.1.2",
+    "mssql": "^10.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^5.7.284",
+    "puppeteer": "^25.1.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sharp": "^0.33.2",
+    "socket.io": "^4.8.3",
+    "tesseract.js": "^7.0.0",
+    "xlsx": "^0.18.5",
+    "youtube-dl-exec": "^3.1.7",
+    "yt-search": "^2.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
